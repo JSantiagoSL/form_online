@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>{{ formulario.titulo }}</h1>
+<p>{{ formulario.descricao }}</p>
+
+<form>
+    {% for pergunta in formulario.perguntas %}
+        <div class="pergunta">
+            <label>{{ pergunta.texto }}</label>
+            {% if pergunta.tipo == 'curta' %}
+                <input type="text" disabled placeholder="Resposta curta">
+            {% elif pergunta.tipo == 'longa' %}
+                <textarea disabled placeholder="Resposta longa"></textarea>
+            {% elif pergunta.tipo == 'multipla_escolha' %}
+                {% for opcao in pergunta.opcoes %}
+                    <div>
+                        <input type="radio" disabled> {{ opcao.texto }}
+                    </div>
+                {% endfor %}
+            {% elif pergunta.tipo == 'caixa_selecao' %}
+                {% for opcao in pergunta.opcoes %}
+                    <div>
+                        <input type="checkbox" disabled> {{ opcao.texto }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+    {% endfor %}
+</form>
+
+<a href="{{ url_for('index') }}">Voltar à Lista de Formulários</a>
+{% endblock %}

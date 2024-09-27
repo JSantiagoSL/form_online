@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Formulários Criados</h1>
+
+<a href="{{ url_for('criar_formulario') }}">Criar Novo Formulário</a>
+
+<ul>
+    {% for formulario in formularios %}
+        <li>
+            <strong>{{ formulario.titulo }}</strong> - {{ formulario.descricao }}
+            <br>
+            <a href="{{ url_for('editar_formulario', formulario_id=formulario.id) }}">Editar</a> |
+            <a href="{{ url_for('deletar_formulario', formulario_id=formulario.id) }}">Deletar</a>
+            <a href="{{ url_for('visualizar_formulario', formulario_id=formulario.id) }}">Visualizar</a> |
+
+        </li>
+    {% else %}
+        <p>Nenhum formulário criado ainda.</p>
+    {% endfor %}
+</ul>
+{% endblock %}

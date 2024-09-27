@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>{{ formulario.titulo if formulario else 'Criar Novo Formulário' }}</h1>
+
+<form method="POST">
+    <div>
+        <label for="titulo">Título</label>
+        <input type="text" name="titulo" id="titulo" maxlength="200" value="{{ formulario.titulo if formulario else '' }}" required>
+    </div>
+    
+    <div>
+        <label for="descricao">Descrição</label>
+        <textarea name="descricao" id="descricao">{{ formulario.descricao if formulario else '' }}</textarea>
+    </div>
+    
+    <button type="submit">Salvar Formulário</button>
+</form>
+
+<h2>Perguntas</h2>
+
+<form id="adicionar-pergunta" method="POST">
+    <div>
+        <label for="texto_pergunta">Texto da Pergunta</label>
+        <input type="text" name="texto_pergunta" required>
+    </div>
+    
+    <div>
+        <label for="tipo_pergunta">Tipo de Pergunta</label>
+        <select name="tipo_pergunta">
+            <option value="curta">Resposta Curta</option>
+            <option value="longa">Resposta Longa</option>
+            <option value="multipla_escolha">Múltipla Escolha</option>
+            <option value="caixa_selecao">Caixa de Seleção</option>
+        </select>
+    </div>
+    
+    <button type="submit">Adicionar Pergunta</button>
+</form>
+
+<div id="lista-perguntas">
+    {% if formulario %}
+        <ul>
+            {% for pergunta in formulario.perguntas %}
+                <li>{{ pergunta.texto }} ({{ pergunta.tipo }})</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/form.js') }}"></script>
+{% endblock %}
